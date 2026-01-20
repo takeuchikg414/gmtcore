@@ -1,0 +1,998 @@
+/* ====================================
+   リセット & ベース設定
+   ==================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* カラー */
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-gray-dark: #1a1a1a;
+    --color-gray-medium: #4a4a4a;
+    --color-gray-light: #f5f5f5;
+    
+    /* タイポグラフィ */
+    --font-display: 'Playfair Display', serif;
+    --font-sans: 'IBM Plex Sans', sans-serif;
+    --font-jp: 'Noto Sans JP', sans-serif;
+    
+    /* スペーシング */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 6rem;
+    --spacing-2xl: 8rem;
+    --spacing-3xl: 12rem;
+    
+    /* トランジション */
+    --transition-smooth: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-jp);
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-gray-dark);
+    background-color: var(--color-white);
+    overflow-x: hidden;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* ====================================
+   ヘッダー
+   ==================================== */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: var(--spacing-md) 0;
+    transition: var(--transition-smooth);
+    background-color: transparent;
+}
+
+.header-scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    padding: var(--spacing-sm) 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: var(--color-black);
+    transition: var(--transition-fast);
+}
+
+.logo:hover {
+    opacity: 0.6;
+}
+
+.logo-text {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.logo-sub {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.nav {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+
+.nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    color: var(--color-gray-dark);
+    position: relative;
+    transition: var(--transition-fast);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--color-black);
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link-accent {
+    padding: 0.5rem 1.5rem;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-radius: 0;
+}
+
+.nav-link-accent::after {
+    display: none;
+}
+
+.nav-link-accent:hover {
+    background-color: var(--color-gray-dark);
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: relative;
+    width: 30px;
+    height: 18px;
+}
+
+.menu-toggle span {
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-black);
+    transition: var(--transition-fast);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu-toggle span:first-child {
+    top: 2px;
+}
+
+.menu-toggle span:last-child {
+    bottom: 2px;
+}
+
+.menu-toggle.is-active span:first-child {
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+}
+
+.menu-toggle.is-active span:last-child {
+    bottom: 50%;
+    transform: translateX(-50%) translateY(50%) rotate(-45deg);
+}
+
+/* ====================================
+   ヒーローセクション
+   ==================================== */
+
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: var(--color-gray-light);
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('dairiseki_haikei.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(3px);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.hero-title {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.hero-title-line {
+    font-family: var(--font-jp);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--color-black);
+    line-height: 1.2;
+}
+
+.hero-title-line-en {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.05em;
+    color: var(--color-gray-medium);
+}
+
+/* ====================================
+   セクションタイトル
+   ==================================== */
+
+.section-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.section-title-main {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--color-black);
+    line-height: 1;
+}
+
+.section-title-sub {
+    font-family: var(--font-jp);
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--color-gray-medium);
+    text-transform: uppercase;
+}
+
+.section-title-center {
+    text-align: center;
+    align-items: center;
+}
+
+.section-title-light .section-title-main {
+    color: var(--color-white);
+}
+
+.section-title-light .section-title-sub {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ====================================
+   コンセプトセクション
+   ==================================== */
+
+.concept {
+    padding: var(--spacing-2xl) 0;
+    background-color: var(--color-white);
+}
+
+.concept-header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.concept-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.concept-definition {
+    padding: var(--spacing-lg) 0;
+    border-top: 1px solid var(--color-black);
+    border-bottom: 1px solid var(--color-black);
+}
+
+.concept-acronym {
+    display: flex;
+    justify-content: center;
+}
+
+.acronym-row {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 4vw, 3rem);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.acronym-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.acronym-of {
+    margin: 0 -1rem;
+}
+
+.acronym-letter {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-black);
+    line-height: 1;
+}
+
+.acronym-of .acronym-letter {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 400;
+    color: var(--color-gray-medium);
+}
+
+.acronym-word {
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--color-gray-medium);
+}
+
+.concept-description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.concept-text {
+    font-family: var(--font-jp);
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--color-gray-dark);
+}
+
+.concept-approach {
+    padding-top: var(--spacing-md);
+}
+
+.concept-subtitle {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--color-black);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.approach-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.approach-item {
+    padding: var(--spacing-md);
+    background-color: var(--color-gray-light);
+    transition: var(--transition-fast);
+}
+
+.approach-item:hover {
+    background-color: #ececec;
+}
+
+.approach-number {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--color-gray-medium);
+    margin-bottom: var(--spacing-xs);
+}
+
+.approach-title {
+    font-family: var(--font-jp);
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--color-black);
+    margin-bottom: var(--spacing-sm);
+}
+
+.approach-text {
+    font-family: var(--font-jp);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-gray-dark);
+}
+
+/* ====================================
+   事業内容セクション
+   ==================================== */
+
+.services {
+    position: relative;
+    padding: var(--spacing-3xl) 0;
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+.services-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 100px,
+            rgba(255,255,255,0.02) 100px,
+            rgba(255,255,255,0.02) 101px
+        );
+    pointer-events: none;
+}
+
+.services-header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.service-item {
+    padding: var(--spacing-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition-smooth);
+}
+
+.service-item:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-8px);
+}
+
+.service-number {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.3);
+    margin-bottom: var(--spacing-sm);
+}
+
+.service-title {
+    font-family: var(--font-jp);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--color-white);
+    margin-bottom: var(--spacing-sm);
+}
+
+.service-description {
+    font-family: var(--font-jp);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ====================================
+   会社概要セクション
+   ==================================== */
+
+.company {
+    padding: var(--spacing-3xl) 0;
+    background-color: var(--color-white);
+}
+
+.company-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+.company-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.company-row {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.company-row:last-child {
+    border-bottom: none;
+}
+
+.company-label,
+.company-value {
+    padding: var(--spacing-md) 0;
+    text-align: left;
+    vertical-align: top;
+}
+
+.company-label {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--color-gray-medium);
+    width: 30%;
+    padding-right: var(--spacing-md);
+}
+
+.company-value {
+    font-family: var(--font-jp);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-gray-dark);
+}
+
+/* ====================================
+   採用情報セクション
+   ==================================== */
+
+.recruit {
+    padding: var(--spacing-3xl) 0;
+    background-color: var(--color-gray-light);
+}
+
+.recruit-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.recruit-message {
+    margin-top: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.recruit-text {
+    font-family: var(--font-jp);
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--color-gray-dark);
+}
+
+.recruit-status {
+    margin-top: var(--spacing-md);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-white);
+    background-color: var(--color-black);
+    border: 1px solid var(--color-black);
+}
+
+/* ====================================
+   問い合わせセクション
+   ==================================== */
+
+.contact {
+    padding: var(--spacing-3xl) 0;
+    background-color: var(--color-white);
+}
+
+.contact-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contact-message {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.contact-text {
+    font-family: var(--font-jp);
+    font-size: 1.125rem;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--color-gray-dark);
+}
+
+.contact-form {
+    margin-top: var(--spacing-xl);
+    text-align: left;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--color-gray-dark);
+}
+
+.form-required {
+    color: var(--color-black);
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    font-family: var(--font-jp);
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-gray-dark);
+    background-color: var(--color-gray-light);
+    border: 1px solid transparent;
+    transition: var(--transition-fast);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--color-black);
+    background-color: var(--color-white);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.form-submit {
+    margin-top: var(--spacing-lg);
+    text-align: center;
+}
+
+.form-button {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--color-white);
+    background-color: var(--color-black);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.form-button:hover {
+    background-color: var(--color-gray-dark);
+}
+
+.form-button:active {
+    transform: translateY(2px);
+}
+
+.form-message {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    font-family: var(--font-jp);
+    font-size: 0.875rem;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.form-message.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.form-message.error {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* ====================================
+   フッター
+   ==================================== */
+
+.footer {
+    padding: var(--spacing-2xl) 0 var(--spacing-lg);
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.footer-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+}
+
+.footer-logo-text {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--color-white);
+}
+
+.footer-logo-sub {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-text {
+    font-family: var(--font-jp);
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-bottom {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-copyright {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+}
+
+/* ====================================
+   アニメーション
+   ==================================== */
+
+.reveal-text,
+.reveal-fade,
+.reveal-slide {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-text.is-visible,
+.reveal-fade.is-visible,
+.reveal-slide.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-slide {
+    transform: translateY(60px);
+}
+
+/* アニメーション遅延 */
+.delay-1 {
+    transition-delay: 0.2s;
+}
+
+.delay-2 {
+    transition-delay: 0.4s;
+}
+
+.delay-3 {
+    transition-delay: 0.6s;
+}
+
+.delay-4 {
+    transition-delay: 0.8s;
+}
+
+.delay-5 {
+    transition-delay: 1s;
+}
+
+.delay-6 {
+    transition-delay: 1.2s;
+}
+
+/* ====================================
+   レスポンシブデザイン
+   ==================================== */
+
+@media (max-width: 1024px) {
+    :root {
+        --spacing-xl: 4rem;
+        --spacing-2xl: 5rem;
+        --spacing-3xl: 8rem;
+    }
+    
+    .company-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    .approach-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        --spacing-2xl: 4rem;
+        --spacing-3xl: 6rem;
+    }
+    
+    .nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--color-white);
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--spacing-md);
+        transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 999;
+    }
+    
+    .nav.is-active {
+        right: 0;
+    }
+    
+    .nav-link {
+        font-size: 1.5rem;
+    }
+    
+    .menu-toggle {
+        display: flex;
+        z-index: 1001;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .company-label {
+        width: 40%;
+    }
+    
+    .acronym-row {
+        gap: 1rem;
+    }
+    
+    .acronym-of {
+        margin: 0 -0.5rem;
+    }
+    
+    .approach-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .logo-text {
+        font-size: 1.5rem;
+    }
+    
+    .hero-title-line {
+        font-size: 2.5rem;
+    }
+    
+    .hero-title-line-en {
+        font-size: 1.25rem;
+    }
+    
+    .section-title-main {
+        font-size: 2.5rem;
+    }
+    
+    .company-label {
+        width: 100%;
+        display: block;
+        padding-bottom: 0.5rem;
+    }
+    
+    .company-value {
+        display: block;
+        padding-top: 0;
+    }
+}
