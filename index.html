@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +8,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
-
 <body>
     <!-- ヘッダー -->
     <header class="header">
@@ -312,7 +308,7 @@
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const href = this.getAttribute('href');
-
+                
                 // TOPリンク（href="#"）の場合は最上部へ
                 if (href === '#') {
                     window.scrollTo({
@@ -321,7 +317,7 @@
                     });
                     return;
                 }
-
+                
                 // その他のアンカーリンク
                 const target = document.querySelector(href);
                 if (target) {
@@ -357,19 +353,20 @@
 
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset;
-
+            
             if (currentScroll > 100) {
                 header.classList.add('header-scrolled');
             } else {
                 header.classList.remove('header-scrolled');
             }
-
+            
             lastScroll = currentScroll;
         });
 
         // モバイルメニュー
         const menuToggle = document.querySelector('.menu-toggle');
         const nav = document.querySelector('.nav');
+        const navLinks = document.querySelectorAll('.nav-link');
 
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('is-active');
@@ -377,21 +374,30 @@
             document.body.classList.toggle('menu-open');
         });
 
+        // メニューリンクをクリックしたらメニューを閉じる
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('is-active');
+                nav.classList.remove('is-active');
+                document.body.classList.remove('menu-open');
+            });
+        });
+
         // 問い合わせフォーム送信
         const contactForm = document.getElementById('contactForm');
-
+        
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
+            
             const formData = new FormData(contactForm);
             const data = Object.fromEntries(formData);
-
+            
             // 送信ボタンを無効化
             const submitButton = contactForm.querySelector('.form-button');
             const originalText = submitButton.textContent;
             submitButton.textContent = '送信中...';
             submitButton.disabled = true;
-
+            
             try {
                 // PHPファイルにPOSTリクエストを送信
                 const response = await fetch('contact.php', {
@@ -401,9 +407,9 @@
                     },
                     body: JSON.stringify(data)
                 });
-
+                
                 const result = await response.json();
-
+                
                 if (result.success) {
                     // 成功メッセージ
                     showMessage(result.message, 'success');
@@ -421,22 +427,22 @@
                 submitButton.disabled = false;
             }
         });
-
+        
         function showMessage(text, type) {
             // 既存のメッセージを削除
             const existingMessage = document.querySelector('.form-message');
             if (existingMessage) {
                 existingMessage.remove();
             }
-
+            
             // 新しいメッセージを表示
             const message = document.createElement('div');
             message.className = `form-message ${type}`;
             message.textContent = text;
-
+            
             const submitDiv = document.querySelector('.form-submit');
             submitDiv.appendChild(message);
-
+            
             // 5秒後にメッセージを削除
             setTimeout(() => {
                 message.remove();
@@ -444,5 +450,4 @@
         }
     </script>
 </body>
-
 </html>
